@@ -250,7 +250,16 @@
         return;
       }
       
-      const $buttonsToHide = $("button.menu-item[data-type]").filter(function() {
+      // Find the button
+      const $add_btn = this.$field.find("button[aria-controls^='fields-menu-']");
+      
+      // Get the value of aria-controls, e.g. "fields-menu-123"
+      const add_button_ac = $add_btn.attr("aria-controls");
+      
+      // Extract the ID part after "fields-menu-"
+      const fields_menu_id = add_button_ac ? add_button_ac.replace("fields-menu-", "") : null;
+      
+      const $buttonsToHide = $(`#fields-menu-${fields_menu_id} button.menu-item[data-type]`).filter(function() {
         const type = $(this).data("type");
         return type && hiddenTypes.indexOf(type) > -1;
       });
